@@ -1,0 +1,58 @@
+schema_version: 1
+
+context:
+  name: compiledb
+  version: "0.10.1"
+
+package:
+  name: ${{ name|lower }}
+  version: ${{ version }}
+
+source:
+  url: https://pypi.org/packages/source/${{ name[0] }}/${{ name }}/${{ name }}-${{ version }}.tar.gz
+  sha256: 06bb47dd1fa04de3a12720379ff382d40441074476db7c16a27e2ad79b7e966e
+
+build:
+  number: 1
+  noarch: python
+  script: ${{ PYTHON }} -m pip install . -vv
+  python:
+    entry_points:
+      - compiledb=compiledb.cli:cli
+
+requirements:
+  host:
+    - pip
+    - python ${{ python_min }}.*
+    - setuptools
+  run:
+    - bashlex
+    - click
+    - python >=${{ python_min }}
+    - shutilwhich
+
+tests:
+  - python:
+      imports:
+        - compiledb
+        - compiledb.commands
+      pip_check: true
+      python_version:
+        - ${{ python_min }}.*
+        - '*'
+  - requirements:
+      run:
+        - pip
+        - python ${{ python_min }}.*
+    script:
+      - compiledb --help
+
+about:
+  summary: Tool for generating Clang JSON Compilation Database files for make-based build systems.
+  license: GPL-3.0-or-later
+  license_file: LICENSE
+  homepage: https://github.com/nickdiego/compiledb
+
+extra:
+  recipe-maintainers:
+    - marcelotrevisani
