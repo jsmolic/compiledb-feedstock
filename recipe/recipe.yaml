@@ -1,19 +1,18 @@
 schema_version: 1
 
 context:
-  name: compiledb
-  version: "0.10.1"
+  version: 0.10.7
 
 package:
-  name: ${{ name|lower }}
+  name: compiledb
   version: ${{ version }}
 
 source:
-  url: https://pypi.org/packages/source/${{ name[0] }}/${{ name }}/${{ name }}-${{ version }}.tar.gz
-  sha256: 06bb47dd1fa04de3a12720379ff382d40441074476db7c16a27e2ad79b7e966e
+- url: https://files.pythonhosted.org/packages/source/c/compiledb/compiledb-${{ version }}.tar.gz
+  sha256: 97752d8810b6977654a11a22cdc41bf6b71473bcdb5da312bc135f36d6af8271
 
 build:
-  number: 1
+  number: 0
   noarch: python
   script: ${{ PYTHON }} -m pip install . -vv
   python:
